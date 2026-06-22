@@ -115,7 +115,7 @@ export default function PostForm({ post }) {
                                 </div>
                             ) : (
                                 <img
-                                    src={service.getfilepreview(post.featuredImage)}
+                                    src={service.getFileDownload(post.featuredImage)}
                                     alt={post.title}
                                     className="rounded-lg w-full h-40 object-cover border border-slate-700/50"
                                     onError={() => setImageError(true)}
