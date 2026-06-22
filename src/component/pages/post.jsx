@@ -45,7 +45,7 @@ export default function Post() {
                                 </div>
                             ) : (
                                 <img
-                                    src={service.getfilepreview(post.featuredImage)}
+                                    src={service.getFileDownload(post.featuredImage)}
                                     alt={post.title}
                                     className='rounded-xl w-full h-96 object-cover shadow-2xl shadow-blue-500/20'
                                     onError={() => setImageError(true)}

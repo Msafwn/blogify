@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 function PostCard({$id, title, featuredImage}) {
   const [imageError, setImageError] = useState(false)
-  const imageUrl = featuredImage ? service.getfilepreview(featuredImage) : null
+  const imageUrl = featuredImage ? service.getFileDownload(featuredImage) : null
 
   return (
    <Link to={`/post/${$id}`}>
