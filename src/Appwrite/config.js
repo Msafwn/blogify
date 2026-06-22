@@ -138,10 +138,20 @@ export class Service {
     }
 
     getfilepreview(fileId){
-        return this.bucket.getFilePreview(
-            conf.appWriteBucketId,
-            fileId,
-        )
+        if (!fileId) {
+            console.warn("No file ID provided for preview");
+            return null;
+        }
+        try {
+            // Construct URL directly from Appwrite API endpoint
+            const baseUrl = conf.appWriteUrl.replace('/v1', '');
+            const previewUrl = `${baseUrl}/v1/storage/buckets/${conf.appWriteBucketId}/files/${fileId}/preview?width=2000&height=2000&gravity=top&quality=100&project=${conf.appWriteProjectId}`;
+            console.log("Image URL:", previewUrl);
+            return previewUrl;
+        } catch (error) {
+            console.error("Error constructing file preview URL: ", error);
+            return null;
+        }
     }
 }
 
