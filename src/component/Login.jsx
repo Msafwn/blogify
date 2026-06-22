@@ -40,30 +40,26 @@ export default function Login() {
 
 
   return (
-    <div className='flex items-center justify-center w-full mt-10 mb-10'>
-    <div className={`mx-auto w-full max-w-lg
-    bg-gray-100 rounded-xl p-10 border border-black/10`}>
+    <div className='flex items-center justify-center w-full min-h-screen py-10'>
+    <div className={`mx-auto w-full max-w-lg bg-gradient-to-br from-slate-900 to-slate-800 rounded-xl p-10 border border-slate-700/50 shadow-2xl shadow-blue-500/10`}>
       <div className='mb-2 flex justify-center'>
       <span className='inline-block w-full max-w-[100px]'>
         <Logo width='100%'/>
       </span>
        </div>
-       <h2 className='text-center text-2xl font-bold
-       leading-tight'>
+       <h2 className='text-center text-2xl font-bold leading-tight text-slate-100'>
        SignIn to your account 
        </h2>
-       <p className='mt-2 text-center text-base text-black/60'>
+       <p className='mt-2 text-center text-base text-slate-400'>
         Don&apos;t have any account information?&nbsp;
         <Link
         to='/signUp'
-        className='font-medium text-primary transition-all duration-200'  
+        className='font-medium text-blue-400 hover:text-blue-300 transition-colors duration-200'  
         >
         sign up    
         </Link>
        </p>
-       {
-        error && <p className='text-red-500 mt-8 text-center'>{error}</p>
-       }
+       {error && <p className='text-red-400 mt-8 text-center font-medium'>{error}</p>}
        <form onSubmit={handleSubmit(signIn)} className='mt-8'>
         <div className='space-y-5'>
         <Input 
@@ -91,7 +87,7 @@ export default function Login() {
             })}
             />
 
-            <Button className='w-full' childern="sign in" type="submit"></Button>
+            <Button className='w-full' variant='primary' childern="sign in" type="submit"></Button>
         </div>
        </form>
     </div>

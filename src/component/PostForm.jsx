@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button,Input, Rte,SelectInput  } from './index'
 import service from "../Appwrite/config";
@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 export default function PostForm({ post }) {
+    const [imageError, setImageError] = useState(false);
     const { register, handleSubmit, watch, setValue, control, getValues } = useForm({
         defaultValues: {
             title: post?.title || "",
@@ -71,53 +72,67 @@ export default function PostForm({ post }) {
     }, [watch, slugTransform, setValue]);
 
     return (
-        <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
-            <div className="w-2/3 px-2">
-                <Input
-                    label=""
-                    placeholder="Title"
-                    className="mb-4"
-                    {...register("title", { required: true })}
-                />
-                <Input
-                    label=""
-                    placeholder="Slug"
-                    className="mb-4"
-                    {...register("slug", { required: true })}
-                    onInput={(e) => {
-                        setValue("slug", slugTransform(e.currentTarget.value), { shouldValidate: true });
-                    }}
-                />
-                <Rte label="Content:" name="content" control={control} defaultValue={getValues("content")}/>
-               
-            </div>
-            <div className="w-1/3 px-2">
-                <Input
-                    label=""
-                    type="file"
-                    className="mb-4"
-                    accept="image/png, image/jpg, image/jpeg, image/gif"
-                    {...register("image", { required: !post })}
-                />
-                {post && (
-                    <div className="w-full mb-4">
-                        <img
-                            src={service.getfilepreview(post.featuredImage)}
-                            alt={post.title}
-                            className="rounded-lg"
-                        />
+        <form onSubmit={handleSubmit(submit)} className="flex flex-wrap gap-6">
+            <div className="w-full lg:w-2/3">
+                <div className="bg-slate-800/50 rounded-lg p-6 border border-slate-700/50">
+                    <h2 className='text-xl font-bold text-slate-100 mb-6'>Post Details</h2>
+                    <Input
+                        label="Post Title"
+                        placeholder="Enter post title"
+                        className="mb-4"
+                        {...register("title", { required: true })}
+                    />
+                    <Input
+                        label="Post Slug"
+                        placeholder="Auto-generated slug"
+                        className="mb-4"
+                        {...register("slug", { required: true })}
+                        onInput={(e) => {
+                            setValue("slug", slugTransform(e.currentTarget.value), { shouldValidate: true });
+                        }}
+                    />
+                    <div className='mb-4'>
+                        <label className='inline-block pb-2 pl-1 text-slate-300 font-medium text-sm'>Content</label>
+                        <Rte name="content" control={control} defaultValue={getValues("content")}/>
                     </div>
-                )}
-                <SelectInput
-                    options={["active", "inactive"]}
-                    label=""
-                    placeholder="status"
-                    className="mb-4"
-                    {...register("status", { required: true })}
-                />
-                <Button type="submit" bgColor={post ? "bg-green-500" : undefined} childern= {post ? "Update" : "Submit"} className="w-full" >
-                   
-                </Button>
+                </div>
+            </div>
+            <div className="w-full lg:w-1/3">
+                <div className="bg-slate-800/50 rounded-lg p-6 border border-slate-700/50">
+                    <h2 className='text-xl font-bold text-slate-100 mb-6'>Post Settings</h2>
+                    <Input
+                        label="Featured Image"
+                        type="file"
+                        className="mb-4"
+                        accept="image/png, image/jpg, image/jpeg, image/gif"
+                        {...register("image", { required: !post })}
+                    />
+                    {post && (
+                        <div className="w-full mb-6">
+                            {imageError || !post.featuredImage ? (
+                                <div className='w-full h-40 bg-slate-700 rounded-lg flex items-center justify-center text-slate-400 border border-slate-700/50'>
+                                    <span>Image not available</span>
+                                </div>
+                            ) : (
+                                <img
+                                    src={service.getfilepreview(post.featuredImage)}
+                                    alt={post.title}
+                                    className="rounded-lg w-full h-40 object-cover border border-slate-700/50"
+                                    onError={() => setImageError(true)}
+                                />
+                            )}
+                        </div>
+                    )}
+                    <SelectInput
+                        options={["active", "inactive"]}
+                        label="Status"
+                        placeholder="Select status"
+                        className="mb-6"
+                        {...register("status", { required: true })}
+                    />
+                    <Button type="submit" variant={post ? 'secondary' : 'primary'} childern={post ? "Update Post" : "Publish Post"} className="w-full" >
+                    </Button>
+                </div>
             </div>
         </form>
     );

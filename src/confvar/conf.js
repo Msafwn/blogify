@@ -6,4 +6,13 @@ const conf = {
   appWriteBucketId: String(import.meta.env.VITE_APPWRITE_BUCKET_ID),
 };
 
+// Validate required environment variables
+const missingVars = Object.entries(conf)
+  .filter(([, value]) => !value || value === 'undefined')
+  .map(([key]) => key);
+
+if (missingVars.length > 0) {
+  console.warn('Missing Appwrite configuration:', missingVars);
+}
+
 export default conf;

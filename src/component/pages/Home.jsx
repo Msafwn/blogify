@@ -18,43 +18,45 @@ function Home() {
     },[])
   if (posts.length === 0) {
     return(
-        <div className='w-full py-8 text-center text-emerald-50 mt-48 mb-10'>
+        <div className='w-full py-16 text-center'>
           <Container childern={
-              <div className='flex flex-wrap'>
-                    <div className='p-2 w-full'>
-                    <Link to='/SignIn'>
-                    <h1 className='text-2xl font-bold hover:text-gray-600'>
-                    please login to read posts
-                    </h1>
-                    </Link>
-                   
+              <div className='flex flex-col items-center justify-center min-h-96'>
+                <div className='mb-8'>
+                  <h1 className='text-4xl font-bold text-slate-100 mb-4'>
+                    Welcome to Blogify
+                  </h1>
+                  <p className='text-slate-400 text-lg mb-8'>
+                    Discover amazing stories and insights
+                  </p>
                 </div>
-                </div>
+                <Link to='/signIn'>
+                  <button className='px-8 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/50 hover:scale-105 active:scale-95'>
+                    Sign In to Read Posts
+                  </button>
+                </Link>
+              </div>
           }>
-              
           </Container>
-          
         </div>
-
     )
-    
   }
   return (
-    <div className='w-full py-8'>
-    <Container childern={
-    <div className='flex flex-wrap'>
-    {
-       
-        posts.map((post) => (
-            <div key={post.$id} className='p-2 w-1/4'>
-            <PostCard {...post}/>
-
-            </div>
-        ))
-    }
-    </div>
-    }>
-    </Container>
+    <div className='w-full py-12'>
+      <Container childern={
+        <div>
+          <h1 className='text-4xl font-bold text-slate-100 mb-8'>Featured Posts</h1>
+          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'>
+            {
+              posts.map((post) => (
+                <div key={post.$id} className='transition-all duration-300 hover:-translate-y-2'>
+                  <PostCard {...post}/>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      }>
+      </Container>
     </div>
   )
 }

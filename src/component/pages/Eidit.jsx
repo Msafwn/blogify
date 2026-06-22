@@ -18,13 +18,16 @@ function Eidit() {
     }
    },[slug, navigate])
   return post ? (
-    <div className='py-8'>
-    <Container childern={
-    <PostForm post={post}/>
-    }>
-    </Container> 
+    <div className='py-12'>
+      <Container childern={
+        <div className='max-w-3xl mx-auto'>
+          <h1 className='text-4xl font-bold text-slate-100 mb-8'>Edit Post</h1>
+          <PostForm post={post}/>
+        </div>
+      }>
+      </Container> 
     </div>
-  ) :null 
+  ) : null 
 }
 
 export default Eidit

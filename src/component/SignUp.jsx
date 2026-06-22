@@ -29,33 +29,29 @@ function SignUp() {
    }
 
     return (
-        <div className='flex items-center justify-center w-full'>
-        <div className={`mx-auto w-full max-w-lg
-        bg-gray-100 rounded-xl p-10 border border-black/10`}>
+        <div className='flex items-center justify-center w-full min-h-screen py-10'>
+        <div className={`mx-auto w-full max-w-lg bg-gradient-to-br from-slate-900 to-slate-800 rounded-xl p-10 border border-slate-700/50 shadow-2xl shadow-blue-500/10`}>
           <div className='mb-2 flex justify-center'>
           <span className='inline-block w-full max-w-[100px]'>
             <Logo width='100%'/>
           </span>
            </div>
-           <h2 className='text-center text-2xl font-bold
-           leading-tight'>
+           <h2 className='text-center text-2xl font-bold leading-tight text-slate-100'>
            SignUp to your account 
            </h2>
-           <p className='mt-2 text-center text-base text-black/60'>
+           <p className='mt-2 text-center text-base text-slate-400'>
             Already have any account information?&nbsp;
             <Link
             to='/signIn'
-            className='font-medium text-primary transition-all duration-200'  
+            className='font-medium text-blue-400 hover:text-blue-300 transition-colors duration-200'  
             >
             sign IN   
             </Link>
            </p>
-           {
-            error && <p className='text-red-500 mt-8 text-center'>{error}</p>
-           }
+           {error && <p className='text-red-400 mt-8 text-center font-medium'>{error}</p>}
 
            <form onSubmit={handleSubmit(create)} className='mt-8 '>
-           <div className='space-y-5 text-black'>
+           <div className='space-y-5'>
             <Input
             label = "Enter fullName:"
             placeholder= "Enter your Full Name"
@@ -64,7 +60,7 @@ function SignUp() {
                 required: "Name is required", 
             })}
             />
-            {errors.name && <p className='text-red-600 text-sm mt-3.5'>{errors.name?.message}</p>}
+            {errors.name && <p className='text-red-400 text-sm mt-2'>{errors.name?.message}</p>}
              <Input 
          label="Enter Email:"
          placeholder='Enter your email address'
@@ -81,7 +77,7 @@ function SignUp() {
             }
         })}
         />
-        {errors.email && <p className='text-red-600 text-sm mt-3.5'>{errors.email?.message}</p>}
+        {errors.email && <p className='text-red-400 text-sm mt-2'>{errors.email?.message}</p>}
 
 <Input 
          label="Enter Password:"
@@ -93,8 +89,8 @@ function SignUp() {
             maxLength: 15 && "password 8 to 15 characters",
             })}
             />
-        {errors.password && <p className='text-red-600 text-sm mt-3.5'>{errors.password?.message}</p>}
-            <Button className='w-full' childern="Create Account" type="submit" ></Button>
+        {errors.password && <p className='text-red-400 text-sm mt-2'>{errors.password?.message}</p>}
+            <Button className='w-full' variant='primary' childern="Create Account" type="submit" ></Button>
             
            </div>
            </form>

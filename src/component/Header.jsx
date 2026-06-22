@@ -38,31 +38,30 @@ function Header() {
 
   ]
   return (
-
     <>
-    <header className='py-3 shadow bg-gray-500'>
+    <header className='py-4 shadow-lg bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border-b border-slate-700/50'>
       <Container childern={
-    
-        <nav className='flex'>
-          <div className='mr-4'>
-        <Link to='/'>
-       <div className='px-10'>
-       <Logo/>
-       </div>
-        </Link>
+        <nav className='flex items-center'>
+          <div className='mr-4 hover:opacity-80 transition-opacity duration-300'>
+            <Link to='/'>
+              <div className='px-2'>
+                <Logo/>
+              </div>
+            </Link>
           </div>
-          <ul className='flex ml-auto'>
+          <ul className='flex ml-auto items-center gap-2'>
             {
               navIteam.map((iteam) =>
               iteam.active ? (
                 <li key={iteam.name}>
-                <button className='inline-block px-6 py-2 font-bold
-                duration-200 hover:bg-slate-900  text-white rounded-2xl'
-                onClick={() => navigate(iteam.slug)}
-                >
-                {iteam.name}</button>
+                  <button 
+                    className='inline-block px-5 py-2.5 font-semibold text-slate-100 rounded-lg transition-all duration-300 hover:bg-slate-700/60 hover:text-blue-300 hover:shadow-lg active:scale-95 focus:outline-none focus:ring-2 focus:ring-blue-500/50'
+                    onClick={() => navigate(iteam.slug)}
+                  >
+                    {iteam.name}
+                  </button>
                 </li>
-              ) :  null
+              ) : null
               )}
               {authstatus && (
                 <li>
@@ -71,11 +70,10 @@ function Header() {
               )}
           </ul>
         </nav>
-        }>
+      }>
       </Container>
     </header>
     </>
-    
   )
 }
 

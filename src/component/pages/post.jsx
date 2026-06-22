@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 
 export default function Post() {
     const [post, setPost] = useState(null);
+    const [imageError, setImageError] = useState(false);
     const { slug } = useParams();
     const navigate = useNavigate();
 
@@ -33,37 +34,45 @@ export default function Post() {
     };
 
     return post ? (
-        <div className="py-8">
-       
-                <div className="w-full flex justify-center mb-4 relative border rounded-xl p-2">
-                    <img
-                        src={service.getfilepreview(post.featuredImage)}
-                        alt={post.title}
-                        className="rounded-xl w-96"
-                    />
-
-                    {isAuthor && (
-                        <div className="absolute right-6 top-6">
-                            <Link to={`/edit-post/${post.$id}`}>
-                                <Button bgColor="bg-green-500" className="mr-3"childern={"Edit"} >
-                                    
-                                </Button>
-                            </Link>
-                            <Button bgColor="bg-red-500" onClick={deletePost} childern={"Delete"}>
-                                
-                            </Button>
+        <div className='py-12'>
+            <Container childern={
+                <div className='max-w-4xl mx-auto'>
+                    <div className='w-full flex justify-center mb-8 relative'>
+                        <div className='relative w-full'>
+                            {imageError || !post.featuredImage ? (
+                                <div className='w-full h-96 bg-slate-700 rounded-xl flex items-center justify-center text-slate-400 shadow-2xl'>
+                                    <span>Image not available</span>
+                                </div>
+                            ) : (
+                                <img
+                                    src={service.getfilepreview(post.featuredImage)}
+                                    alt={post.title}
+                                    className='rounded-xl w-full h-96 object-cover shadow-2xl shadow-blue-500/20'
+                                    onError={() => setImageError(true)}
+                                />
+                            )}
+                            {isAuthor && (
+                                <div className='absolute right-6 top-6 flex gap-3'>
+                                    <Link to={`/edit-post/${post.$id}`}>
+                                        <Button variant='secondary' className='px-6' childern='Edit' />
+                                    </Link>
+                                    <Button variant='danger' onClick={deletePost} childern='Delete' />
+                                </div>
+                            )}
                         </div>
-                    )}
-                </div>
-                <div className="w-full mb-6">
-                <h2 className="text-white p-3 text-xl">Title:</h2>
-                    <h1 className="text-2xl font-bold text-white px-4">{post.title}</h1>
-                </div>
-                <div className="browser-css text-white pl-4">
-                
-                    {parse(post.content)}
                     </div>
-         
+                    <div className='mb-8'>
+                        <h1 className='text-4xl font-bold text-slate-100 mb-4'>{post.title}</h1>
+                        <p className='text-slate-400 text-sm'>
+                            Published on {new Date(post.$createdAt).toLocaleDateString()}
+                        </p>
+                    </div>
+                    <div className='browser-css text-slate-200 leading-relaxed prose prose-invert max-w-none'>
+                        {parse(post.content)}
+                    </div>
+                </div>
+            }>
+            </Container>
         </div>
     ) : null;
 }

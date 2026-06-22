@@ -8,22 +8,22 @@ function ContactUs() {
     bg-gray-100 rounded-xl p-10 border border-black/10'>
     <h1 className='font-bold text-3xl text-center'>
     Contact Us</h1>
+    <label htmlFor="">Full Name:</label>
     <Input 
-      label="full Name:"
       type="text"
       placeholder="Enter your full name"
       className="mb-3"
     />
+    <label htmlFor="">Phone Number:</label>
     <Input 
-      label="Phone Number:"
       type="text"
-      placeholder="Enter Phno"
+      placeholder="Enter Phone Number"
       className="mb-3"
     />
       <label htmlFor="">Massege:</label>
       <textarea name="" id="" placeholder='Massege:' className='w-full p-2 shadow-lg' rows="4"></textarea>
  
-    <Button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-xl" childern={"submit"}></Button>
+    <Button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-xl w-full" childern={"submit"}></Button>
 
     <p className='p-3 text-gray-400'>Phno:03270343432</p>
     <p className='text-gray-400 px-3'>Email:safwan@123.exmple</p>
