@@ -137,12 +137,14 @@ export class Service {
         }
     }
     getFileDownload(fileId) {
-    if (!fileId) return null;
-
-    return this.bucket.getFileDownload(
-        conf.appWriteBucketId,
-        fileId
-    );
+    try {
+        return this.bucket.getFileView(
+            conf.appWriteBucketId,
+            fileId
+        )
+    } catch (error) {
+        console.log("Database service :: getFileDownload error: " + error);
+    }
 }
 }
 
