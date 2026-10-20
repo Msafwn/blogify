@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 export default function Post() {
     const [post, setPost] = useState(null);
     const [imageError, setImageError] = useState(false);
+    const [imageLoaded, setImageLoaded] = useState(false);
     const { slug } = useParams();
     const navigate = useNavigate();
 
@@ -38,16 +39,28 @@ export default function Post() {
             <Container childern={
                 <div className='max-w-4xl mx-auto'>
                     <div className='w-full flex justify-center mb-8 relative'>
-                        <div className='relative w-full'>
+                        <div className='relative w-full h-80 md:h-96 rounded-xl overflow-hidden bg-slate-800 shadow-2xl'>
+                            {!imageLoaded && !imageError && post.featuredImage && (
+                                <div className='absolute inset-0 bg-slate-700 animate-pulse flex items-center justify-center'>
+                                    <svg className='w-10 h-10 text-slate-500 animate-spin' fill='none' viewBox='0 0 24 24'>
+                                        <circle className='opacity-25' cx='12' cy='12' r='10' stroke='currentColor' strokeWidth='4'></circle>
+                                        <path className='opacity-75' fill='currentColor' d='M4 12a8 8 0 018-8v8H4z'></path>
+                                    </svg>
+                                </div>
+                            )}
                             {imageError || !post.featuredImage ? (
-                                <div className='w-full h-96 bg-slate-700 rounded-xl flex items-center justify-center text-slate-400 shadow-2xl'>
+                                <div className='w-full h-full bg-slate-800 flex items-center justify-center text-slate-400'>
                                     <span>Image not available</span>
                                 </div>
                             ) : (
                                 <img
                                     src={service.getFileDownload(post.featuredImage)}
                                     alt={post.title}
-                                    className='rounded-xl w-full h-96 object-cover shadow-2xl shadow-blue-500/20'
+                                    decoding='async'
+                                    onLoad={() => setImageLoaded(true)}
+                                    className={`rounded-xl w-full h-full object-cover transition-opacity duration-500 ${
+                                        imageLoaded ? 'opacity-100' : 'opacity-0'
+                                    }`}
                                     onError={() => setImageError(true)}
                                 />
                             )}
